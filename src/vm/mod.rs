@@ -14,6 +14,8 @@ pub struct Vm {
 pub const LOAD: u8 = 0x00;
 pub const MOVE: u8 = 0x01;
 
+pub const HLT: u8 = 0xCC;
+
 impl Vm {
     pub fn new(program: Vec<u8>) -> Self {
         Self {
@@ -42,6 +44,8 @@ impl Vm {
         match opcode {
             LOAD => self._load()?,
             MOVE => self._move()?,
+
+            HLT => self.state = false,
             _ => return Err(VmError::InvalidOpcode(opcode))
         }
 

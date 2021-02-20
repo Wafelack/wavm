@@ -37,5 +37,22 @@ mod test {
 
             Ok(())
         }
+
+        #[test]
+        fn halt() -> Result<()> {
+            let program = vec![LOAD, 0x00, 0x00, 0x1A,
+                                       HLT,
+                                       MOVE, 0x01, 0x00];
+            let mut vm = Vm::new(program);
+            vm.run()?;
+
+            assert_eq!(
+                vm.get_registers()[1],
+                0
+            );
+
+
+            Ok(())
+        }
     }
 }
