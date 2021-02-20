@@ -4,6 +4,7 @@ pub mod load;
 pub mod moove;
 pub mod arithmetic;
 pub mod boolean;
+pub mod jumps;
 
 pub struct Vm {
     registers: [i64;32],
@@ -34,6 +35,10 @@ pub const OR: u8 = 0x0E;
 pub const AND: u8 = 0x0F;
 pub const XOR: u8 = 0x10;
 
+pub const JMP: u8 = 0x11;
+pub const JMPEQ: u8 = 0x12;
+pub const RJMP: u8 = 0x13;
+
 pub const HLT: u8 = 0xCC;
 
 impl Vm {
@@ -60,7 +65,6 @@ impl Vm {
     }
     fn _run_cycle(&mut self) -> Result<()> {
         let opcode = self.program[self.ip];
-
         match opcode {
             LOAD => self._load()?,
             MOVE => self._move()?,
@@ -81,6 +85,10 @@ impl Vm {
             AND => self._and()?,
             OR => self._or()?,
             XOR => self._xor()?,
+
+            JMP => self._jmp()?,
+            JMPEQ => self._jmpeq()?,
+            RJMP => self._rjmp()?,
 
             HLT => self.state = false,
             _ => return Err(VmError::InvalidOpcode(opcode))
