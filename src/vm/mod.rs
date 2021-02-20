@@ -1,7 +1,7 @@
 use std::fmt::{self, Debug, Formatter};
 
 pub mod load;
-mod tests;
+pub mod moove;
 
 pub struct Vm {
     registers: [i64;32],
@@ -12,6 +12,7 @@ pub struct Vm {
 
 // Constants
 pub const LOAD: u8 = 0x00;
+pub const MOVE: u8 = 0x01;
 
 impl Vm {
     pub fn new(program: Vec<u8>) -> Self {
@@ -32,7 +33,7 @@ impl Vm {
         while self.ip < self.program.len() && self.state {
             self._run_cycle()?;
         }
-
+        self.state = false;
         Ok(())
     }
     fn _run_cycle(&mut self) -> Result<()> {
@@ -40,6 +41,7 @@ impl Vm {
 
         match opcode {
             LOAD => self._load()?,
+            MOVE => self._move()?,
             _ => return Err(VmError::InvalidOpcode(opcode))
         }
 
@@ -97,3 +99,5 @@ impl Debug for VmError {
 }
 
 pub type Result<T> = std::result::Result<T, VmError>;
+
+mod tests;
