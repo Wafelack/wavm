@@ -1,17 +1,19 @@
 use std::fmt::{self, Debug, Formatter};
 
-pub mod load;
-pub mod moove;
 pub mod arithmetic;
 pub mod boolean;
 pub mod jumps;
+pub mod load;
+pub mod memory;
+pub mod moove;
 
 pub struct Vm {
-    registers: [i64;32],
-        // 32th: Eq register
+    registers: [i64; 32],
+    // 32th: Eq register
     ip: usize,
     program: Vec<u8>,
     state: bool,
+    heap: Vec<u8>,
 }
 
 // Constants
@@ -39,24 +41,28 @@ pub const JMP: u8 = 0x11;
 pub const JMPEQ: u8 = 0x12;
 pub const RJMP: u8 = 0x13;
 
+pub const RQM: u8 = 0x14;
+pub const ASCII: u8 = 0x15;
+
+pub const DSP: u8 = 0xAA;
 pub const HLT: u8 = 0xCC;
 
 impl Vm {
     pub fn new(program: Vec<u8>) -> Self {
         Self {
             program,
-            registers: [0;32],
+            registers: [0; 32],
             ip: 0,
             state: true, // running
+            heap: vec![],
         }
     }
-    
-    pub fn get_registers(&self) -> [i64;32] {
+
+    pub fn get_registers(&self) -> [i64; 32] {
         self.registers
     }
 
     pub fn run(&mut self) -> Result<()> {
-
         while self.ip < self.program.len() && self.state {
             self._run_cycle()?;
         }
@@ -65,6 +71,7 @@ impl Vm {
     }
     fn _run_cycle(&mut self) -> Result<()> {
         let opcode = self.program[self.ip];
+
         match opcode {
             LOAD => self._load()?,
             MOVE => self._move()?,
@@ -90,8 +97,12 @@ impl Vm {
             JMPEQ => self._jmpeq()?,
             RJMP => self._rjmp()?,
 
+            RQM => self._rqm()?,
+            ASCII => self._ascii()?,
+
+            DSP => todo!(),
             HLT => self.state = false,
-            _ => return Err(VmError::InvalidOpcode(opcode))
+            _ => return Err(VmError::InvalidOpcode(opcode)),
         }
 
         self.ip += 1;
@@ -101,29 +112,19 @@ impl Vm {
     // utils
     fn next_8(&mut self) -> Result<u8> {
         if self.ip >= self.program.len() {
-            Err(
-                VmError::OutOfBounds
-            )
+            Err(VmError::OutOfBounds)
         } else {
             self.ip += 1;
-            Ok(
-                
-                self.program[self.ip]
-            )
+            Ok(self.program[self.ip])
         }
     }
     fn next_16(&mut self) -> Result<u16> {
         if self.ip + 1 >= self.program.len() {
-            Err(
-                VmError::OutOfBounds
-            )
+            Err(VmError::OutOfBounds)
         } else {
             self.ip += 1;
             self.ip += 1;
-            Ok(
-                
-                (self.program[self.ip - 1] as u16) << 8 | self.program[self.ip] as u16
-            )
+            Ok((self.program[self.ip - 1] as u16) << 8 | self.program[self.ip] as u16)
         }
     }
 }
@@ -136,9 +137,8 @@ pub enum VmError {
 
 impl Debug for VmError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        
         match self {
-            Self::InvalidOpcode(opc) => write!(f, "Invalid opcode: {}.", opc)?,
+            Self::InvalidOpcode(opc) => write!(f, "Invalid opcode: {:#02x}.", opc)?,
             Self::InvalidRegister(reg) => write!(f, "Invalid register: {:#02x}", reg)?,
             Self::OutOfBounds => write!(f, "Out of bounds indexing.")?,
         }

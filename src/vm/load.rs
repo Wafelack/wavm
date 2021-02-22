@@ -1,4 +1,4 @@
-use super::{Result, VmError, Vm};
+use super::{Result, Vm, VmError};
 
 impl Vm {
     pub fn _load(&mut self) -> Result<()> {
@@ -6,9 +6,7 @@ impl Vm {
         let value = self.next_16()?;
 
         if dest > 31 {
-            return Err(
-                VmError::InvalidRegister(dest)
-            )
+            return Err(VmError::InvalidRegister(dest));
         }
 
         self.registers[dest as usize] = value as i64;

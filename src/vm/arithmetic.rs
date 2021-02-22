@@ -1,4 +1,4 @@
-use super::{Result, VmError, Vm};
+use super::{Result, Vm, VmError};
 
 impl Vm {
     pub fn _add(&mut self) -> Result<()> {
@@ -6,13 +6,9 @@ impl Vm {
         let rhs = self.next_8()?;
 
         if lhs > 31 {
-            return Err(
-                VmError::InvalidRegister(lhs)
-            )
+            return Err(VmError::InvalidRegister(lhs));
         } else if rhs > 31 {
-            return Err(
-                VmError::InvalidRegister(rhs)
-            )
+            return Err(VmError::InvalidRegister(rhs));
         }
 
         self.registers[lhs as usize] += self.registers[rhs as usize];
@@ -24,13 +20,9 @@ impl Vm {
         let rhs = self.next_8()?;
 
         if lhs > 31 {
-            return Err(
-                VmError::InvalidRegister(lhs)
-            )
+            return Err(VmError::InvalidRegister(lhs));
         } else if rhs > 31 {
-            return Err(
-                VmError::InvalidRegister(rhs)
-            )
+            return Err(VmError::InvalidRegister(rhs));
         }
 
         self.registers[lhs as usize] -= self.registers[rhs as usize];
@@ -42,13 +34,9 @@ impl Vm {
         let rhs = self.next_8()?;
 
         if lhs > 31 {
-            return Err(
-                VmError::InvalidRegister(lhs)
-            )
+            return Err(VmError::InvalidRegister(lhs));
         } else if rhs > 31 {
-            return Err(
-                VmError::InvalidRegister(rhs)
-            )
+            return Err(VmError::InvalidRegister(rhs));
         }
 
         self.registers[lhs as usize] *= self.registers[rhs as usize];
@@ -60,13 +48,9 @@ impl Vm {
         let rhs = self.next_8()?;
 
         if lhs > 31 {
-            return Err(
-                VmError::InvalidRegister(lhs)
-            )
+            return Err(VmError::InvalidRegister(lhs));
         } else if rhs > 31 {
-            return Err(
-                VmError::InvalidRegister(rhs)
-            )
+            return Err(VmError::InvalidRegister(rhs));
         }
 
         self.registers[lhs as usize] /= self.registers[rhs as usize];
@@ -78,13 +62,9 @@ impl Vm {
         let rhs = self.next_8()?;
 
         if lhs > 31 {
-            return Err(
-                VmError::InvalidRegister(lhs)
-            )
+            return Err(VmError::InvalidRegister(lhs));
         } else if rhs > 31 {
-            return Err(
-                VmError::InvalidRegister(rhs)
-            )
+            return Err(VmError::InvalidRegister(rhs));
         }
 
         self.registers[lhs as usize] %= self.registers[rhs as usize];
