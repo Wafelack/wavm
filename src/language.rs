@@ -220,12 +220,29 @@ impl Compiler {
                     }
                     "drg" => {
                         if splited.len() < 2 {
-                            self.add_error(l, "Usage: drg <register_a> <reigster_b>.");
+                            self.add_error(l, "Usage: drg <register>.");
                         } else {
                             current += 1;
                             match splited[current].parse::<u8>() {
                                 Ok(u) => {
                                     self.output.push(DRG);
+                                    self.output.push(u);
+                                },
+                                Err(_) => {
+                                    self.add_error(l, "Invalid register, expected a natural number between 0 and 31");
+                                }
+                            };
+                            current += 1;
+                        }
+                    }
+                    "dsp" => {
+                        if splited.len() < 2 {
+                            self.add_error(l, "Usage: dsp <register>.");
+                        } else {
+                            current += 1;
+                            match splited[current].parse::<u8>() {
+                                Ok(u) => {
+                                    self.output.push(DSP);
                                     self.output.push(u);
                                 },
                                 Err(_) => {
@@ -281,12 +298,14 @@ impl Compiler {
             let mut i = 0;
             while i < to_iter.len() && !to_iter[i].ends_with("'") {
                 to_push.push_str(to_iter[i]);
+                to_push.push(' ');
                 *current += 1;
                 i += 1;
             }
 
             to_push.push_str(to_iter[i]);
             self.output.push(ASCII);
+            self.output.push(reg);
             let mut byted = to_push.as_bytes().to_vec();
             
             *(byted.last_mut().unwrap()) = 0x00; // Overwrite closing delimiter with a null terminator.

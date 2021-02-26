@@ -79,11 +79,28 @@ mod test {
 
             assert_eq!(
                 compiled,
-                vec![21, 72, 101, 108, 108, 111, 44, 87, 111, 114, 108, 100, 33, 0]
+                vec![ASCII, 0, 72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 32, 33, 0]
             );
 
             Ok(())
         }        
+
+        #[test]
+        fn dsp() -> std::result::Result<(), CompilerErrors> {
+            let compiled = Compiler::new("\
+            ascii 0 'Hello, World !'
+            dsp 0").compile()?;
+
+            assert_eq!(
+                compiled,
+                vec![ASCII, 0, 72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 32, 33, 0, DSP, 0]
+            );
+
+            let mut vm = Vm::new(compiled);
+            vm.run().unwrap();
+
+            Ok(())         
+        }
         
     }
 }

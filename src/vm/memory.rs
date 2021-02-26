@@ -203,8 +203,6 @@ impl Vm {
     pub fn _ascii(&mut self) -> Result<()> {
         let register = self.next_8()?;
 
-        println!("Register: {:#02x}", register);
-
         if register > 31 {
             return Err(VmError::InvalidRegister(register));
         }
