@@ -47,7 +47,9 @@ pub const SETB: u8 = 0x16;
 pub const GETB: u8 = 0x17;
 pub const MMOV: u8 = 0x18;
 pub const MSET: u8 = 0x19;
+pub const FREE: u8 = 0x1A;
 
+pub const DRG: u8 = 0x99;
 pub const DSP: u8 = 0xAA;
 pub const HLT: u8 = 0xCC;
 
@@ -107,8 +109,9 @@ impl Vm {
             GETB => self._get_byte()?,
             MMOV => self._memmove()?,
             MSET => self._memset()?,
+            FREE => self._free()?,
 
-
+            DRG => self._drg()?,
             DSP => todo!(),
             HLT => self.state = false,
             _ => return Err(VmError::InvalidOpcode(opcode)),
@@ -116,6 +119,24 @@ impl Vm {
 
         self.ip += 1;
         Ok(())
+    }
+
+    fn _drg(&mut self) -> Result<()> {
+
+        let reg = self.next_8()?;
+
+        if reg > 31 {
+            Err(
+                VmError::InvalidRegister(reg)
+            )
+        } else {
+
+            println!("{:#016x}", self.registers[reg as usize]);
+
+            Ok(())
+        }
+
+        
     }
 
     // utils

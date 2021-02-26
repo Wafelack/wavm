@@ -79,6 +79,36 @@ impl Vm {
         Ok(())
     }
 
+    pub fn _free(&mut self) -> Result<()> {
+        let ptr = self.next_8()?;
+
+        if ptr > 31 {
+            return Err(VmError::InvalidRegister(ptr))
+        }
+
+        let value = self.next_8()?;
+
+        if value > 31 {
+            return Err(VmError::InvalidRegister(value))
+        }
+
+        let ptr_val = self.registers[ptr as usize] as usize;
+
+        let value_val = self.registers[value as usize] as usize;
+
+        if ptr_val  + value_val >= self.heap.len() {
+            return Err(
+                VmError::OutOfBounds
+            )
+        }
+
+        for i in 0..value_val {
+            self.heap[ptr_val + i] = 0;
+        }
+
+        Ok(())
+    }
+
     pub fn _memset(&mut self) -> Result<()> {
         let ptr = self.next_8()?;
 
