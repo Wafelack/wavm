@@ -16,6 +16,81 @@ impl Vm {
         Ok(())
     }
 
+    pub fn _setbyte(&mut self) -> Result<()> {
+        let ptr = self.next_8()?;
+
+        if ptr > 31 {
+            return Err(VmError::InvalidRegister(ptr))
+        }
+
+        let value = self.next_8()?;
+
+        if value > 31 {
+            return Err(VmError::InvalidRegister(value))
+        }
+
+        let ptr_val = self.registers[ptr as usize] as usize;
+
+        if ptr_val >= self.heap.len() {
+            return Err(
+                VmError::SegmentationFault
+            )
+        }
+
+        let value_val = self.registers[value as usize];
+
+        self.heap[ptr_val] = if value_val > 255 {
+            255
+        } else if value_val < 0 {
+            0
+        } else {
+            value_val as u8
+        };
+
+        Ok(())
+    }
+
+    pub fn _memmove(&mut self) -> Result<()> {
+
+        let end = self.next_8()?;
+
+        if end > 31 {
+            return Err(VmError::InvalidRegister(end))
+        }
+
+        let start = self.next_8()?;
+
+        if start > 31 {
+            return Err(VmError::InvalidRegister(start))
+        }
+
+        let amount_reg = self.next_8()?;
+
+        if amount_reg > 31 {
+            return Err(
+                VmError::InvalidRegister(amount_reg)
+            )
+        }
+
+        let amount = self.registers[amount_reg as usize] as usize;
+
+        for i in 0..amount {
+
+            let ptr_from = self.registers[start as usize] as usize + i;
+            let ptr_to   = self.registers[end as usize] as usize + i;
+
+            if ptr_from >= self.heap.len() || ptr_to >= self.heap.len() {
+                return Err(
+                    VmError::SegmentationFault
+                )
+            }
+            
+            self.heap[ptr_to] = self.heap[ptr_from];
+        }
+
+        Ok(())
+    }
+
     pub fn _ascii(&mut self) -> Result<()> {
         let register = self.next_8()?;
 

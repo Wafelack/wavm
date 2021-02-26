@@ -43,6 +43,8 @@ pub const RJMP: u8 = 0x13;
 
 pub const RQM: u8 = 0x14;
 pub const ASCII: u8 = 0x15;
+pub const SETB: u8 = 0x16;
+pub const MMOV: u8 = 0x17;
 
 pub const DSP: u8 = 0xAA;
 pub const HLT: u8 = 0xCC;
@@ -99,6 +101,8 @@ impl Vm {
 
             RQM => self._rqm()?,
             ASCII => self._ascii()?,
+            SETB => self._setbyte()?,
+            MMOV => self._memmove()?,
 
             DSP => todo!(),
             HLT => self.state = false,
@@ -133,17 +137,17 @@ pub enum VmError {
     InvalidOpcode(u8),
     OutOfBounds,
     InvalidRegister(u8),
+    SegmentationFault,
 }
 
 impl Debug for VmError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
-            Self::InvalidOpcode(opc) => write!(f, "Invalid opcode: {:#02x}.", opc)?,
-            Self::InvalidRegister(reg) => write!(f, "Invalid register: {:#02x}", reg)?,
-            Self::OutOfBounds => write!(f, "Out of bounds indexing.")?,
+            Self::InvalidOpcode(opc) => write!(f, "Invalid opcode: {:#02x}.", opc),
+            Self::InvalidRegister(reg) => write!(f, "Invalid register: {:#02x}", reg),
+            Self::OutOfBounds => write!(f, "Out of bounds indexing."),
+            Self::SegmentationFault => write!(f, "Segmentation fault."),
         }
-
-        Ok(())
     }
 }
 
