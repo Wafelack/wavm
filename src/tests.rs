@@ -2,7 +2,7 @@
 mod test {
     mod language {
         use crate::vm::*;
-        use crate::language::{Compiler, CompilerErrors};
+        use crate::compiler::{Compiler, CompilerErrors};
 
         #[test]
         fn load() -> std::result::Result<(), CompilerErrors> {
