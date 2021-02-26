@@ -1,6 +1,35 @@
 use super::{Result, Vm, VmError};
 
 impl Vm {
+    pub fn _get_byte(&mut self) -> Result<()> {
+
+        let dest_reg = self.next_8()?;
+
+        if dest_reg > 31 {
+            return Err(VmError::InvalidRegister(dest_reg));
+        }
+
+        let ptr_reg = self.next_8()?;
+
+        if ptr_reg > 31 {
+            return Err(VmError::InvalidRegister(ptr_reg));
+        }
+
+        let ptr = self.registers[ptr_reg as usize] as usize;
+
+        if ptr >= self.heap.len() {
+            Err(
+                VmError::SegmentationFault
+            )
+        } else {
+
+            self.registers[dest_reg as usize] = self.heap[ptr_reg as usize] as i64;
+
+            Ok(())
+        }
+
+        
+    }
     pub fn _rqm(&mut self) -> Result<()> {
         let register = self.next_8()?;
 

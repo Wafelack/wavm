@@ -337,6 +337,26 @@ mod test {
 
                 Ok(())
             }
+
+            #[test]
+            fn get_byte() -> Result<()> {
+                let program = vec![
+                    LOAD, 0x01, 0x00, 0x16, RQM, 0x00, 0x00, 0x01, SETB, 0x00, 0x01, GETB, 0x02, 0x00,
+                ];
+                let mut vm = Vm::new(program);
+                vm.run()?;
+
+                assert_eq!(vm.heap.len(), 1);
+
+                assert_eq!(vm.get_registers()[0], 0);
+
+                assert_eq!(
+                    vm.get_registers()[2],
+                    22
+                );
+
+                Ok(())
+            }
             
             #[test]
             fn memmove() -> Result<()> {
