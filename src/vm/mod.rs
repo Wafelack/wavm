@@ -45,6 +45,7 @@ pub const RQM: u8 = 0x14;
 pub const ASCII: u8 = 0x15;
 pub const SETB: u8 = 0x16;
 pub const MMOV: u8 = 0x17;
+pub const MSET: u8 = 0x18;
 
 pub const DSP: u8 = 0xAA;
 pub const HLT: u8 = 0xCC;
@@ -103,6 +104,7 @@ impl Vm {
             ASCII => self._ascii()?,
             SETB => self._setbyte()?,
             MMOV => self._memmove()?,
+            MSET => self._memset()?,
 
             DSP => todo!(),
             HLT => self.state = false,

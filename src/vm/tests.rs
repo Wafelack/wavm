@@ -358,6 +358,30 @@ mod test {
 
                 Ok(())
             }
+
+            #[test]
+            fn memset() -> Result<()> {
+                let program = vec![
+                    RQM, 0x00, 0x00, 0x05,
+                    LOAD, 0x01, 0x00, 0x05, 
+                    MSET, 0x00, 0x01, 0x01,
+                ];
+                let mut vm = Vm::new(program);
+                vm.run()?;
+
+                assert_eq!(vm.heap.len(), 5);
+
+                assert_eq!(vm.get_registers()[0], 0);
+
+                for i in 0..5 {
+                    assert_eq!(
+                        vm.heap[i],
+                        5
+                    )
+                }
+
+                Ok(())
+            }
         }
     }
 }
