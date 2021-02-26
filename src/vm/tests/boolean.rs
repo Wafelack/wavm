@@ -2,7 +2,7 @@ use super::*;
 
 #[cfg(test)]
 mod test {
-    pub use super::*;
+    use super::*;
 
     mod boolean {
         use super::*;
