@@ -19,11 +19,11 @@ There are 31 opcodes available, defined by the following table.
 
 | Name | Bytecode Value | Section |
 |------|----------------|---------|
-| LOAD |     0x00       | Miscellanous |
-| MOVE |     0x01       | Miscellanous |
-| HLT  |     0xCC       | Miscellanous |
-| DRG  |     0x99       | Miscellanous |
-| DSP  |     0xAA       | Miscellanous |
+| LOAD |     0x00       | [Miscellanous](./misc.md) |
+| MOVE |     0x01       | [Miscellanous](./misc.md) |
+| HLT  |     0xCC       | [Miscellanous](./misc.md) |
+| DRG  |     0x99       | [Miscellanous](./misc.md) |
+| DSP  |     0xAA       | [Miscellanous](./misc.md) |
 | ADD  |     0x02       |  Arithmetic  |
 | SUB  |     0x03       |  Arithmetic  |
 | MUL  |     0x04       |  Arithmetic  |
