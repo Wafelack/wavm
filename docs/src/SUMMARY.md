@@ -4,3 +4,4 @@
 
 - [OpCodes](./opcodes.md)
     - [Miscellanous](./misc.md)
+    - [Arithmetic](./math.md)

@@ -24,11 +24,11 @@ There are 31 opcodes available, defined by the following table.
 | HLT  |     0xCC       | [Miscellanous](./misc.md) |
 | DRG  |     0x99       | [Miscellanous](./misc.md) |
 | DSP  |     0xAA       | [Miscellanous](./misc.md) |
-| ADD  |     0x02       |  Arithmetic  |
-| SUB  |     0x03       |  Arithmetic  |
-| MUL  |     0x04       |  Arithmetic  |
-| DIV  |     0x05       |  Arithmetic  |
-| MOD  |     0x06       |  Arithmetic  |
+| ADD  |     0x02       |  [Arithmetic](./math.md)  |
+| SUB  |     0x03       |  [Arithmetic](./math.md)   |
+| MUL  |     0x04       |  [Arithmetic](./math.md)   |
+| DIV  |     0x05       |  [Arithmetic](./math.md)   |
+| MOD  |     0x06       |  [Arithmetic](./math.md)   |
 |  EQ  |     0x07       |   Boolean    |
 | GEQ  |     0x08       |   Boolean    |
 |  GE  |     0x09       |   Boolean    |

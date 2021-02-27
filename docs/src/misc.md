@@ -1,6 +1,6 @@
 # Miscellanous
 
-This is the `Miscellanous` section opcodes documentation.
+This is the miscellanous section opcodes documentation.
 
 ## LOAD
 
