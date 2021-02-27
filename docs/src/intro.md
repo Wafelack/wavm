@@ -29,16 +29,16 @@ There are 31 opcodes available, defined by the following table.
 | MUL  |     0x04       |  [Arithmetic](./math.md)   |
 | DIV  |     0x05       |  [Arithmetic](./math.md)   |
 | MOD  |     0x06       |  [Arithmetic](./math.md)   |
-|  EQ  |     0x07       |   Boolean    |
-| GEQ  |     0x08       |   Boolean    |
-|  GE  |     0x09       |   Boolean    |
-| LEQ  |     0x0A       |   Boolean    |
-|  LE  |     0x0B       |   Boolean    |
-| NEQ  |     0x0C       |   Boolean    |
-|  NOT |     0x0D       |   Boolean    |
-|  OR  |     0x0E       |   Boolean    |
-| AND  |     0x0F       |   Boolean    |
-| XOR  |     0x10       |   Boolean    |
+|  EQ  |     0x07       |   [Boolean](./bool.md)    |
+| GEQ  |     0x08       |   [Boolean](./bool.md)    |
+|  GE  |     0x09       |   [Boolean](./bool.md)    |
+| LEQ  |     0x0A       |   [Boolean](./bool.md)    |
+|  LE  |     0x0B       |   [Boolean](./bool.md)    |
+| NEQ  |     0x0C       |   [Boolean](./bool.md)    |
+|  NOT |     0x0D       |   [Boolean](./bool.md)    |
+|  OR  |     0x0E       |   [Boolean](./bool.md)    |
+| AND  |     0x0F       |   [Boolean](./bool.md)    |
+| XOR  |     0x10       |   [Boolean](./bool.md)    |
 |  JMP |     0x11       |    Jumps     |
 |JMPEQ |     0x12       |    Jumps     |
 | RJMP |     0x13       |    Jumps     |
