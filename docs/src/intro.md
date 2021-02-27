@@ -4,6 +4,8 @@ WAVM is a 64 bits register based virtual machine with a few opcodes, written in 
 
 ## Overview
 
+### Registers
+
 This virtual machine has 32 registers defined by the following table.
 
 | Number |     Usage      |
@@ -11,7 +13,7 @@ This virtual machine has 32 registers defined by the following table.
 |  0..30 |  Multi purpose |
 |   31   |  Equality flag |
 
----
+### OpCodes
 
 There are 31 opcodes available, defined by the following table.
 
@@ -47,6 +49,16 @@ There are 31 opcodes available, defined by the following table.
 | MMOV |     0x18       |    Memory    |
 | MSET |     0x19       |    Memory    |
 | FREE |     0x1A       |    Memory    |
+
+### Numbers
+
+WAVM supports 3 numbers types:
+
+- Octal (`%` prefix).
+- Hexadecimal (`0x` prefix).
+- Binary (`0b` prefix).
+- Decimal (No prefix).
+- `$EQ` variable to index register 31.
 
 ## Command Line Interface
 
