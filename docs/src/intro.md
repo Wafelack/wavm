@@ -48,6 +48,28 @@ There are 31 opcodes available, defined by the following table.
 | MSET |     0x19       |    Memory    |
 | FREE |     0x1A       |    Memory    |
 
-
 ## Command Line Interface
 
+The command line (install it via `cargo install wavm` or by downloading a binary in [the release page](https://github.com/wafelack/wavm/releases)) has two major commands.
+
+### Build
+
+The build command compiles a `.wavm` source file to a `.wavc` bytecode file.
+
+Usage: `wavm build <input_file> [-o [output file]]`.
+
+This might raise errors in the following cases:
+
+- Source file contains errors.
+- Source file does not exist.
+
+### Run
+
+The run command runs a `.wavc` bytecode file inside the vm.
+
+Usage: `wavm run <input_file>`.
+
+This might raise errors in the following cases:
+
+- Input file does not exist.
+- Bytecode is invalid.
