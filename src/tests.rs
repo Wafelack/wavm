@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
     mod language {
-        use crate::vm::*;
+        use crate::{compiler::parse_number, vm::*};
         use crate::compiler::{Compiler, CompilerErrors};
 
         #[test]
@@ -100,6 +100,29 @@ mod test {
             vm.run().unwrap();
 
             Ok(())         
+        }
+
+        #[test]
+        fn parse_num() {
+            let eighteen_hex = parse_number("0x12");
+            assert_eq!(
+                eighteen_hex,
+                Some(18),
+            );
+            
+            let twelve_octal = parse_number("%14");
+
+            assert_eq!(
+                twelve_octal,
+                Some(12),
+            );
+
+            let fifteen_binary = parse_number("0b1111");
+
+            assert_eq!(
+                fifteen_binary,
+                Some(15),
+            )
         }
         
     }

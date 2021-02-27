@@ -32,19 +32,19 @@ impl Compiler {
             self.add_error(l, &format!("Usage: {} <register_a> <register_b>.", name));
         } else {
             *current += 1;
-            let lhs = match splited[*current].parse::<u8>() {
-                Ok(u) => u,
-                Err(_) => {
+            let lhs = match parse_number(splited[*current]) {
+                Some(u) => u,
+                None => {
                     self.add_error(l, "Invalid register, expected a natural number between 0 and 31");
                     *current += 1;
                     *current += 1;
                     return;
                 }
-            };
+            } as u8;
             *current += 1;
-            let rhs = match splited[*current].parse::<u8>() {
-                Ok(u) => u,
-                Err(_) => {
+            let rhs = match parse_number(splited[*current]) {
+                Some(u) => u,
+                None => {
                     if custom.is_none() {
                         self.add_error(l, "Invalid register, expected a natural number between 0 and 31");
                     } else {
@@ -53,7 +53,7 @@ impl Compiler {
                     *current += 1;
                     return;
                 }
-            };
+            } as u8;
             *current += 1;
 
             self.output.push(opcode);
@@ -67,19 +67,19 @@ impl Compiler {
             self.add_error(l, &format!("Usage: {} <register> <value>.", name));
         } else {
             *current += 1;
-            let register = match splited[*current].parse::<u8>() {
-                Ok(u) => u,
-                Err(_) => {
+            let register = match parse_number(splited[*current]) {
+                Some(u) => u,
+                None => {
                     self.add_error(l, "Invalid register, expected a natural number between 0 and 31");
                     *current += 1;
                     *current += 1;
                     return;
                 }
-            };
+            } as u8;
             *current += 1;
-            let value = match splited[*current].parse::<u16>() {
-                Ok(u) => u,
-                Err(_) => {
+            let value = match parse_number(splited[*current]) {
+                Some(u) => u,
+                None => {
                     self.add_error(l, "Invalid value, expected a natural number between 0 and 65535");
                     *current += 1;
                     return;
@@ -109,9 +109,9 @@ impl Compiler {
                     return;
                 }
             } else {
-                match splited[*current].parse::<u16>() {
-                    Ok(u) => u,
-                    Err(_) => {
+                match parse_number(splited[*current]) {
+                    Some(u) => u,
+                    None => {
                         self.add_error(l, "Invalid value, expected a natural number between 0 and 65535");
                         *current += 1;
                         return;
@@ -131,35 +131,35 @@ impl Compiler {
             self.add_error(l, &format!("Usage: {} <register_a> <register_b> <register_c>.", name));
         } else {
             *current += 1;
-            let a = match splited[*current].parse::<u8>() {
-                Ok(u) => u,
-                Err(_) => {
+            let a = match parse_number(splited[*current]) {
+                Some(u) => u,
+                None => {
                     self.add_error(l, "Invalid register, expected a natural number between 0 and 31");
                     *current += 1;
                     *current += 1;
                     *current += 1;
                     return;
                 }
-            };
+            } as u8;
             *current += 1;
-            let b = match splited[*current].parse::<u8>() {
-                Ok(u) => u,
-                Err(_) => {
+            let b = match parse_number(splited[*current]) {
+                Some(u) => u,
+                None => {
                     self.add_error(l, "Invalid register, expected a natural number between 0 and 31");
                     *current += 1;
                     *current += 1;
                     return;
                 }
-            };
+            } as u8;
             *current += 1;
-            let c = match splited[*current].parse::<u8>() {
-                Ok(u) => u,
-                Err(_) => {
+            let c = match parse_number(splited[*current]) {
+                Some(u) => u,
+                None => {
                     self.add_error(l, "Invalid register, expected a natural number between 0 and 31");
                     *current += 1;
                     return;
                 }
-            };
+            } as u8;
             *current += 1;
 
             self.output.push(opcode);
@@ -223,12 +223,12 @@ impl Compiler {
                             self.add_error(l, "Usage: drg <register>.");
                         } else {
                             current += 1;
-                            match splited[current].parse::<u8>() {
-                                Ok(u) => {
+                            match parse_number(splited[current]) {
+                                Some(u) => {
                                     self.output.push(DRG);
-                                    self.output.push(u);
+                                    self.output.push(u as u8);
                                 },
-                                Err(_) => {
+                                None => {
                                     self.add_error(l, "Invalid register, expected a natural number between 0 and 31");
                                 }
                             };
@@ -240,12 +240,12 @@ impl Compiler {
                             self.add_error(l, "Usage: dsp <register>.");
                         } else {
                             current += 1;
-                            match splited[current].parse::<u8>() {
-                                Ok(u) => {
+                            match parse_number(splited[current]) {
+                                Some(u) => {
                                     self.output.push(DSP);
-                                    self.output.push(u);
+                                    self.output.push(u as u8);
                                 },
-                                Err(_) => {
+                                None => {
                                     self.add_error(l, "Invalid register, expected a natural number between 0 and 31");
                                 }
                             };
@@ -314,6 +314,31 @@ impl Compiler {
                 &byted[1..]
             );
                 
+        }
+    }
+}
+
+pub fn parse_number(num: &str) -> Option<u16> {
+    if num.starts_with("0x") {
+        match u16::from_str_radix(num.trim_start_matches("0x"), 16) {
+            Ok(i) => Some(i),
+            _ => None,
+        }
+    } else if num.starts_with("0b") {
+        match u16::from_str_radix(num.trim_start_matches("0b"), 2) {
+            Ok(i) => Some(i),
+            _ => None,
+        }
+    } else if num.starts_with("%") {
+        match u16::from_str_radix(num.trim_start_matches("%"), 8) {
+            Ok(i) => Some(i),
+            _ => None
+        }
+    } else {
+
+        match u16::from_str_radix(num, 10) {
+            Ok(i) => Some(i),
+            _ => None
         }
     }
 }
