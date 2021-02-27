@@ -1,0 +1,6 @@
+[book]
+authors = ["Wafelack <wafelack@protonmail.com>"]
+language = "en"
+multilingual = false
+src = "src"
+title = "WAVM docs"

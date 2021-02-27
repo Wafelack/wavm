@@ -319,7 +319,9 @@ impl Compiler {
 }
 
 pub fn parse_number(num: &str) -> Option<u16> {
-    if num.starts_with("0x") {
+    if num == "$EQ" {
+        Some(31)
+    } else if num.starts_with("0x") {
         match u16::from_str_radix(num.trim_start_matches("0x"), 16) {
             Ok(i) => Some(i),
             _ => None,
