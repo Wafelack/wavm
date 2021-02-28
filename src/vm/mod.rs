@@ -122,40 +122,28 @@ impl Vm {
     }
 
     fn _drg(&mut self) -> Result<()> {
-
         let reg = self.next_8()?;
 
         if reg > 31 {
-            Err(
-                VmError::InvalidRegister(reg)
-            )
+            Err(VmError::InvalidRegister(reg))
         } else {
-
             println!("{:#016x}", self.registers[reg as usize]);
 
             Ok(())
         }
-
-        
     }
 
     fn _dsp(&mut self) -> Result<()> {
         let reg = self.next_8()?;
 
         if reg > 31 {
-            Err(
-                VmError::InvalidRegister(reg)
-            )
+            Err(VmError::InvalidRegister(reg))
         } else {
-
             let val = self.registers[reg as usize] as usize;
 
             if val >= self.heap.len() {
-                Err(
-                    VmError::OutOfBounds
-                )
+                Err(VmError::OutOfBounds)
             } else {
-
                 let mut i = 0;
 
                 while val + i < self.heap.len() && self.heap[val + i] != 0x00 {
@@ -166,8 +154,6 @@ impl Vm {
 
                 Ok(())
             }
-
-            
         }
     }
 

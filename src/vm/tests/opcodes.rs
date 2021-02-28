@@ -3,7 +3,7 @@ use super::*;
 #[cfg(test)]
 mod test {
     use super::*;
-    
+
     mod opcodes {
         use super::*;
 
