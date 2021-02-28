@@ -26,7 +26,7 @@ $ cargo test
 $ cargo build --release
 ```
 
-* Install from crates.io: `cargo install wavm`.
+* Install from crates.io: `cargo install wavm-cli`.
 
 Example
 -------

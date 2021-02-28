@@ -1,5 +1,5 @@
 [package]
-name = "wavm"
+name = "wavm-cli"
 version = "0.1.0"
 authors = ["Wafelack <wafelack@protonmail.com>"]
 edition = "2018"
