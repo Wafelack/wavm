@@ -93,7 +93,7 @@ impl Vm {
         }
 
         for i in 0..value_val {
-            self.heap[ptr_val + i] = 0;
+            self.heap.remove(ptr_val + i);
         }
 
         Ok(())
