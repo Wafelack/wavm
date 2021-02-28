@@ -39,9 +39,9 @@ There are 31 opcodes available, defined by the following table.
 |  OR  |     0x0E       |   [Boolean](./bool.md)    |
 | AND  |     0x0F       |   [Boolean](./bool.md)    |
 | XOR  |     0x10       |   [Boolean](./bool.md)    |
-|  JMP |     0x11       |    Jumps     |
-|JMPEQ |     0x12       |    Jumps     |
-| RJMP |     0x13       |    Jumps     |
+|  JMP |     0x11       |    [Jumps](./jumps.md)     |
+|JMPEQ |     0x12       |    [Jumps](./jumps.md)     |
+| RJMP |     0x13       |    [Jumps](./jumps.md)     |
 | RQM  |     0x14       |    Memory    |
 |ASCII |     0x15       |    Memory    |
 | SETB |     0x16       |    Memory    |
@@ -59,6 +59,20 @@ WAVM supports 3 numbers types:
 - Binary (`0b` prefix).
 - Decimal (No prefix).
 - `$EQ` variable to index register 31.
+
+### Labels
+
+Labels are used exclusively for jumps, their refer to the actual program length.
+
+Example:
+
+```
+ascii %0 'Hello, World !'
+:a_label
+hlt
+```
+
+Here, `a_label` value is 17.
 
 ## Command Line Interface
 

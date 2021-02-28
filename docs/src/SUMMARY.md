@@ -6,3 +6,4 @@
     - [Miscellanous](./misc.md)
     - [Arithmetic](./math.md)
     - [Boolean](./bool.md)
+    - [Jumps](./jumps.md)
