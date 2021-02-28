@@ -42,13 +42,13 @@ There are 31 opcodes available, defined by the following table.
 |  JMP |     0x11       |    [Jumps](./jumps.md)     |
 |JMPEQ |     0x12       |    [Jumps](./jumps.md)     |
 | RJMP |     0x13       |    [Jumps](./jumps.md)     |
-| RQM  |     0x14       |    Memory    |
-|ASCII |     0x15       |    Memory    |
-| SETB |     0x16       |    Memory    |
-| GETB |     0x17       |    Memory    |
-| MMOV |     0x18       |    Memory    |
-| MSET |     0x19       |    Memory    |
-| FREE |     0x1A       |    Memory    |
+| RQM  |     0x14       |    [Memory](./memory.md)    |
+|ASCII |     0x15       |    [Memory](./memory.md)    |
+| SETB |     0x16       |    [Memory](./memory.md)    |
+| GETB |     0x17       |    [Memory](./memory.md)    |
+| MMOV |     0x18       |    [Memory](./memory.md)    |
+| MSET |     0x19       |    [Memory](./memory.md)    |
+| FREE |     0x1A       |    [Memory](./memory.md)    |
 
 ### Numbers
 

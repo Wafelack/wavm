@@ -7,3 +7,4 @@
     - [Arithmetic](./math.md)
     - [Boolean](./bool.md)
     - [Jumps](./jumps.md)
+    - [Memory](./memory.md)
