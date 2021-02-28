@@ -3,6 +3,11 @@ name = "wavm"
 version = "0.1.0"
 authors = ["Wafelack <wafelack@protonmail.com>"]
 edition = "2018"
+description = "A 64 bit register based virtual machine."
+license = "GPL-3.0"
+homepage="https://github.com/wafelack/wavm"
+repository="https://github.com/wafelack/wavm"
+keywords = ["VM", "Virtual-Machine", "Language-VM"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
