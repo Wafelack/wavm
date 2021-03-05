@@ -3,6 +3,8 @@ WAVM
 
 WAVM, *Wait, another virtual machine ?*, is a register based 64 bits virtual machine written in Rust.
 
+If you are searching for the Web Assembly Virtual Machine, go [here](https://github.com/wavm/wavm)
+
 It relies on 32 registers and 31 opcodes that permit to do various things.
 
 It contains both a compiler to build bytecode for assembly and a virtual machine to run the produced bytecode.
